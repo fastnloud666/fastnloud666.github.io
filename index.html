@@ -8,7 +8,9 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background: #000000;
+      background-image: url('background.png');
+      background-repeat: repeat;
+      background-size: auto;
       color: rgb(255, 255, 255);
     }
     h1 {
@@ -88,8 +90,8 @@
           <td>${event.location}</td>
           <td>${event.city}</td>
           <td>${event.genre || ''}</td>
-          <td>${event.band || ''}</td>
-          <td><a href="${event.link}" target="_blank">Details</a></td>
+          <td>${event.bands || ''}</td>
+          <td><a href="${event.link}" target="_blank" style="color: white;">Details</a></td>
         `;
         tbody.appendChild(row);
       });
