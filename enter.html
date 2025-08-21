@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add New Event</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>📋 Add a New Event</h1>
+  <form id="eventForm">
+    <label for="name">Event Name</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="organizer">Organizer</label>
+    <input type="text" id="organizer" name="organizer" required />
+
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" required />
+
+    <label for="location">Location</label>
+    <input type="text" id="location" name="location" required />
+
+    <label for="city">City</label>
+    <input type="text" id="city" name="city" required />
+
+    <label for="region">Region</label>
+    <select id="region" name="region" required>
+      <option value="">Select Region</option>
+      <option value="US West">US West</option>
+      <option value="US Central">US Central</option>
+      <option value="US East">US East</option>
+      <option value="Europe">Europe</option>
+      <option value="Asia">Asia</option>
+    </select>
+
+    <label for="formats">Formats</label>
+    <input type="text" id="formats" name="formats" placeholder="e.g. Commander, Standard" />
+
+    <label for="tcgs">TCGs</label>
+    <input type="text" id="tcgs" name="tcgs" placeholder="e.g. Magic, Lorcana" />
+
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="Upcoming">Upcoming</option>
+      <option value="Cancelled">Cancelled</option>
+      <option value="Postponed">Postponed</option>
+    </select>
+
+    <label for="link">Event Link</label>
+    <input type="url" id="link" name="link" placeholder="https://example.com" />
+
+    <button type="submit">Submit Event</button>
+  </form>
+
+  <script>
+    document.getElementById('eventForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const event = Object.fromEntries(formData.entries());
+      console.log("New Event Submitted:", event);
+      alert("Event submitted! (Check console for data)");
+      this.reset();
+    });
+  </script>
+</body>
+</html>

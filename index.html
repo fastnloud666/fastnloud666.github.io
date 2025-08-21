@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upcoming concerts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #000000;
+      color: rgb(255, 255, 255);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgb(145, 145, 145);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ffffff;
+      text-align: left;
+    }
+    th {
+      background-color: #000000;
+      color: rgb(255, 255, 255);
+      cursor: pointer;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+    <img src="https://tcgcons.com/images/tcgcons-logo.png" alt="TCGCons Logo" style="display: block; margin: 0 auto 20px; width: 200px; height: auto;" />
+  <h1>Upcoming Events</h1>
+  <input type="text" id="searchInput" placeholder="🔍 Filter events by any keyword..." />
+
+  <table id="eventsTable">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Name</th>
+        <th onclick="sortTable(1)">Organizer</th>
+        <th onclick="sortTable(2)">Date</th>
+        <th onclick="sortTable(3)">Location</th>
+        <th onclick="sortTable(4)">City</th>
+        <th onclick="sortTable(5)">Region</th>
+        <th onclick="sortTable(6)">Formats</th>
+        <th onclick="sortTable(7)">TCGs</th>
+        <th>Status</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody id="eventsBody">
+      <!-- Events will be injected here -->
+    </tbody>
+  </table>
+
+  <script>
+    let eventData = [];
+
+    async function fetchEvents() {
+      const res = await fetch('https://raw.githubusercontent.com/gnall/tcgcons.com/main/eventdata.json');
+      const data = await res.json();
+      eventData = data.events || data;
+      renderTable(eventData);
+    }
+
+    function renderTable(events) {
+      const tbody = document.getElementById('eventsBody');
+      tbody.innerHTML = '';
+      events.forEach(event => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${event.name}</td>
+          <td>${event.organizer}</td>
+          <td>${event.date}</td>
+          <td>${event.location}</td>
+          <td>${event.city}</td>
+          <td>${event.region}</td>
+          <td>${event.formats}</td>
+          <td>${event.tcgs || ''}</td>
+          <td>${event.status}</td>
+          <td><a href="${event.link}" target="_blank">Details</a></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function sortTable(colIndex) {
+      const rows = Array.from(document.querySelector('#eventsBody').rows);
+      const sorted = rows.sort((a, b) => {
+        const valA = a.cells[colIndex].textContent.trim().toLowerCase();
+        const valB = b.cells[colIndex].textContent.trim().toLowerCase();
+        return valA.localeCompare(valB);
+      });
+      const tbody = document.getElementById('eventsBody');
+      sorted.forEach(row => tbody.appendChild(row));
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const keyword = this.value.toLowerCase();
+      const filtered = eventData.filter(event =>
+        Object.values(event).some(val =>
+          String(val).toLowerCase().includes(keyword)
+        )
+      );
+      renderTable(filtered);
+    });
+
+    fetchEvents();
+  </script>
+</body>
+</html>
