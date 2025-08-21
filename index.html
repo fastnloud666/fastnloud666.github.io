@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Upcoming concerts</title>
+  <title>Upcoming Concerts</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,7 +26,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      background: rgb(145, 145, 145);
+      background: #3d3d3d;
     }
     th, td {
       padding: 12px;
@@ -39,12 +39,12 @@
       cursor: pointer;
     }
     tr:hover {
-      background-color: #f1f1f1;
+      background-color: rgb(145, 145, 145);
     }
   </style>
 </head>
 <body>
-    <img src="https://tcgcons.com/images/tcgcons-logo.png" alt="TCGCons Logo" style="display: block; margin: 0 auto 20px; width: 200px; height: auto;" />
+    <img src="https://fastnloud666.github.io/fastnloud.png" alt="Logo" style="display: block; margin: 0 auto 20px; width: 200px; height: auto;" />
   <h1>Upcoming Events</h1>
   <input type="text" id="searchInput" placeholder="🔍 Filter events by any keyword..." />
 
@@ -56,10 +56,8 @@
         <th onclick="sortTable(2)">Date</th>
         <th onclick="sortTable(3)">Location</th>
         <th onclick="sortTable(4)">City</th>
-        <th onclick="sortTable(5)">Region</th>
-        <th onclick="sortTable(6)">Formats</th>
-        <th onclick="sortTable(7)">TCGs</th>
-        <th>Status</th>
+        <th onclick="sortTable(6)">Genre</th>
+        <th onclick="sortTable(7)">Bands</th>
         <th>Link</th>
       </tr>
     </thead>
@@ -72,7 +70,7 @@
     let eventData = [];
 
     async function fetchEvents() {
-      const res = await fetch('https://raw.githubusercontent.com/gnall/tcgcons.com/main/eventdata.json');
+      const res = await fetch('https://raw.githubusercontent.com/fastnloud666/fastnloud666.github.io/refs/heads/main/eventdata.json');
       const data = await res.json();
       eventData = data.events || data;
       renderTable(eventData);
@@ -89,10 +87,8 @@
           <td>${event.date}</td>
           <td>${event.location}</td>
           <td>${event.city}</td>
-          <td>${event.region}</td>
-          <td>${event.formats}</td>
-          <td>${event.tcgs || ''}</td>
-          <td>${event.status}</td>
+          <td>${event.genre || ''}</td>
+          <td>${event.band || ''}</td>
           <td><a href="${event.link}" target="_blank">Details</a></td>
         `;
         tbody.appendChild(row);
